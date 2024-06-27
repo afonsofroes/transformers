@@ -537,7 +537,7 @@ class DefaultFlowCallback(TrainerCallback):
 
         # Evaluate
         if (
-            args.eval_strategy == IntervalStrategy.STEPS
+            args.evaluation_strategy == IntervalStrategy.STEPS
             and state.global_step % state.eval_steps == 0
             and args.eval_delay <= state.global_step
         ):
@@ -566,7 +566,7 @@ class DefaultFlowCallback(TrainerCallback):
             control.should_log = True
 
         # Evaluate
-        if args.eval_strategy == IntervalStrategy.EPOCH and args.eval_delay <= state.epoch:
+        if args.evaluation_strategy == IntervalStrategy.EPOCH and args.eval_delay <= state.epoch:
             control.should_evaluate = True
 
         # Save
@@ -682,7 +682,7 @@ class EarlyStoppingCallback(TrainerCallback, ExportableState):
             args.metric_for_best_model is not None
         ), "EarlyStoppingCallback requires metric_for_best_model is defined"
         assert (
-            args.eval_strategy != IntervalStrategy.NO
+            args.evaluation_strategy != IntervalStrategy.NO
         ), "EarlyStoppingCallback requires IntervalStrategy of steps or epoch"
 
     def on_evaluate(self, args, state, control, metrics, **kwargs):
